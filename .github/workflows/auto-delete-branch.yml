@@ -1,0 +1,36 @@
+name: Auto Delete Merged Branch
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  delete-branch:
+    # 只在 PR 被合并时执行（非关闭）
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete merged branch
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const branchName = context.payload.pull_request.head.ref;
+            const protectedBranches = ['main', 'develop', 'master'];
+            
+            // 跳过保护分支
+            if (protectedBranches.includes(branchName)) {
+              console.log(`⏭️  跳过保护分支: ${branchName}`);
+              return;
+            }
+            
+            // 删除远程分支
+            try {
+              await github.rest.git.deleteRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `heads/${branchName}`
+              });
+              console.log(`✅ 已删除分支: ${branchName}`);
+            } catch (error) {
+              console.log(`❌ 删除失败: ${error.message}`);
+            }

@@ -1,0 +1,45 @@
+{
+  "name": "rules",
+  "version": "1.0.0",
+  "description": "代码分支规范化与管控方案",
+  "private": true,
+  "scripts": {
+    "prepare": "husky install",
+    "setup": "npm install && chmod +x scripts/cleanup-local-branches.sh && chmod +x .husky/pre-commit && chmod +x .husky/commit-msg && chmod +x scripts/diff-review.sh",
+    "cr": "./scripts/diff-review.sh",
+    "cr:staged": "./scripts/diff-review.sh --staged",
+    "cr:commit": "./scripts/diff-review.sh --commit HEAD"
+  },
+  "keywords": [
+    "git",
+    "workflow",
+    "branch",
+    "commit",
+    "conventional-commits"
+  ],
+  "devDependencies": {
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.2.6",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "semantic-release": "^22.0.12"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:wplnancy/rule.git"
+  },
+  "author": "",
+  "license": "MIT"
+}

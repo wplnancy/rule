@@ -1,0 +1,37 @@
+# CODEOWNERS 文件
+# 用于自动指定代码审核人
+# 详细文档：https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# 全局默认审核人（可选，根据需要修改用户名）
+# * @your-username
+
+# 前端代码
+# /frontend/**          @frontend-lead
+# /src/components/**    @frontend-lead
+# *.tsx                 @frontend-lead
+# *.jsx                 @frontend-lead
+
+# 后端代码
+# /backend/**           @backend-lead
+# /api/**               @backend-lead
+# *.go                  @backend-lead
+
+# 配置文件（需要谨慎审核）
+# package.json          @tech-lead
+# tsconfig.json         @tech-lead
+# .github/**            @devops-lead
+
+# 数据库相关
+# /migrations/**        @backend-lead @dba
+# schema.sql            @backend-lead @dba
+
+# 文档（所有人都可以审核）
+*.md                  @anyone
+
+# 示例：关键安全文件（需要多人审核）
+# /security/**          @tech-lead @security-lead
+
+# 使用说明：
+# 1. 取消注释相关行并替换用户名
+# 2. 用户名格式：@username（个人）或 @org/team-name（团队）
+# 3. 团队名称需要在 GitHub Organization 中创建

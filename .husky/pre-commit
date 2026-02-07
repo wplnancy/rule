@@ -1,0 +1,24 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+branch="$(git rev-parse --abbrev-ref HEAD)"
+
+# 禁止直接提交到保护分支
+if [ "$branch" = "main" ] || [ "$branch" = "develop" ] || [ "$branch" = "master" ]; then
+  echo "❌ 错误：禁止直接提交到 $branch 分支"
+  echo "   请创建功能分支并提交 Pull Request"
+  exit 1
+fi
+
+# 检查分支命名规范
+if ! echo "$branch" | grep -qE '^(feature|bugfix|hotfix|release|chore|docs)/[a-z0-9-]+$'; then
+  echo "❌ 错误：分支命名不符合规范"
+  echo "   正确格式: feature/xxx, bugfix/xxx, hotfix/xxx 等"
+  echo "   当前分支: $branch"
+  exit 1
+fi
+
+echo "✅ 分支命名检查通过: $branch"
+
+# 运行 lint-staged（如果已配置）
+npx lint-staged
